@@ -1,43 +1,60 @@
 import { ResolveFn, Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
-import { LoginComponent } from './auth/login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ErrorHandler, inject } from '@angular/core';
-import { delay, of } from 'rxjs';
+import { LoginComponent } from './auth/pages/login/login.component';
+import { RegisterComponent } from './auth/pages/register/register.component';
+import { ForgotPasswordComponent } from './auth/pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './auth/pages/reset-password/reset-password.component';
 
 export const routes: Routes = [
     {
-        path: 'auth',
+        path: '',
         title: 'Authentication',
         component: AuthComponent,
         children: [
-            { 
-                path: 'login',
-                title: 'Login',
-                component: LoginComponent
-            }
+          {
+            path: '', redirectTo: 'login', pathMatch: 'full'
+          },
+          {
+              path: 'login',
+              title: 'Login',
+              component: LoginComponent
+          },
+          {
+            path: 'register',
+            title: 'Register',
+            component: RegisterComponent
+          },
+          {
+            path: 'forgot-password',
+            title: 'Forgot Password',
+            component: ForgotPasswordComponent
+          },
+          {
+            path: 'reset-password',
+            title: 'Reset Password',
+            component: ResetPasswordComponent
+          }
         ]
     },
-    // {    
+    // {
     //     path: "old-user-page",
-    //     redirectTo: ({ queryParams }) => {      
+    //     redirectTo: ({ queryParams }) => {
     //         console.log(queryParams['userId']);
     //         const errorHandler = inject(ErrorHandler);
-    //         const userIdParam = queryParams['userId'];      
+    //         const userIdParam = queryParams['userId'];
     //         if (userIdParam !== undefined) {
     //             return `user/${userIdParam}`;
-    //         } else {        
-    //             errorHandler.handleError(new Error('Attempted navigation to user page without user ID.'));        
-    //             return `/not-found`;      
-    //         }    
-    //     },  
-    // },  
-    // { 
-    //     path: "user/:userId", component: AuthComponent 
+    //         } else {
+    //             errorHandler.handleError(new Error('Attempted navigation to user page without user ID.'));
+    //             return `/not-found`;
+    //         }
+    //     },
     // },
-    {
-        path: '', redirectTo: 'not-found', pathMatch: 'full'
-    },
+    // {
+    //     path: "user/:userId", component: AuthComponent
+    // },
     { path: '**', component: PageNotFoundComponent }
 ];
 
